@@ -1,16 +1,24 @@
 # Parking_lot
 
 ## Build
+```
 docker-compose up -d --build parking_lot
+```
 
 ## Execute from file
+```
 docker exec -t parking_lot bin/parking_lot file_input.txt
+```
 
 ## Execute from shell
+```
 docker exec -it parking_lot bin/parking_lot cmd
+```
 
 ## Run unit test
-docker exec -t parking_lot go test ./...
+```
+docker exec -t parking_lot go test -v ./...
+```
 
 ### Input (contents of file):
 ```
