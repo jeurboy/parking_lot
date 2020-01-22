@@ -14,30 +14,13 @@ func main() {
 
 	var res string
 	cmd := lib.GetCommandExecuter()
+
 	if len(args) == 2 {
-
-		path := "/usr/src/fixures/" + args[1]
-
-		file, err := os.Open(path)
-		if err != nil {
-			log.Fatal(err)
+		if args[1] != "cmd" {
+			doFile(args[1])
+			return
 		}
-		defer file.Close()
-
-		scanner := bufio.NewScanner(file)
-		for scanner.Scan() {
-			//fmt.Println(scanner.Text())
-
-			command := strings.Split(scanner.Text(), " ")
-			//spew.Dump(command)
-			res, _ = cmd.Execute(command[0], command[1:]...)
-			//res, _ = cmd.Execute(command...)
-			fmt.Println(res)
-		}
-
-		if err := scanner.Err(); err != nil {
-			log.Fatal(err)
-		}
+		doCmd()
 		return
 	}
 
@@ -81,4 +64,48 @@ func main() {
 	res, _ = cmd.Execute("slot_number_for_registration_number", "MH-04-AY-1111")
 	fmt.Println("Result :", res)
 	fmt.Println("Executing done")
+}
+
+func doFile(filename string) {
+	var res string
+	cmd := lib.GetCommandExecuter()
+
+	path := "/usr/src/fixures/" + filename
+
+	file, err := os.Open(path)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		command := strings.Split(scanner.Text(), " ")
+		res, _ = cmd.Execute(command[0], command[1:]...)
+		fmt.Println(res)
+	}
+
+	if err := scanner.Err(); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func doCmd() {
+	var res string
+	cmd := lib.GetCommandExecuter()
+
+	fmt.Print("Parking shell > ")
+	scanner := bufio.NewScanner(os.Stdin)
+	for scanner.Scan() {
+		if strings.Compare(scanner.Text(), "exit") == 0 {
+			fmt.Println("Bye")
+			return
+		}
+		command := strings.Split(scanner.Text(), " ")
+		res, _ = cmd.Execute(command[0], command[1:]...)
+
+		fmt.Println(res)
+
+		fmt.Print("Parking shell > ")
+	}
 }

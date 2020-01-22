@@ -136,6 +136,7 @@ func (c *Command) Validate(command string, args ...string) (err error) {
 }
 
 func (c *Command) Execute(command string, args ...string) (res string, err error) {
+	res = fmt.Sprintf("Invalid command %s", command)
 	funk.ForEach(c.NextCommand, func(c Command) {
 		if err != nil {
 			return
@@ -151,6 +152,8 @@ func (c *Command) Execute(command string, args ...string) (res string, err error
 
 		if err != nil {
 			fmt.Printf("No handler on command %s\n", c.GetName())
+
+			res = fmt.Sprintf("No handler on command %s", c.GetName())
 			return
 		}
 

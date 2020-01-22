@@ -7,8 +7,10 @@ docker-compose up -d --build parking_lot
 docker exec -t parking_lot bin/parking_lot file_input.txt
 
 ## Execute from shell
-Do not finished
+docker exec -it parking_lot bin/parking_lot cmd
 
+## Run unit test
+docker exec -t parking_lot go test ./...
 
 ### Input (contents of file):
 ```
