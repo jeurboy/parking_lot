@@ -1,0 +1,14 @@
+version: "3.7"
+
+# docker-compose up --build -d go-dev && docker logs -f go-dev
+
+services:
+  parking_lot:
+    build: ./
+    volumes:
+      - ./functional_spec/fixtures:/usr/src/fixures
+      - ./parking_lot:/usr/src/parking_lot
+    stdin_open: true
+    tty: true
+    container_name: parking_lot
+    entrypoint: realize start --run

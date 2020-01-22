@@ -1,0 +1,24 @@
+settings:
+  legacy:
+    force: false
+    interval: 0s
+schema:
+  - name: parking_lot
+    path: .
+    commands:
+      build:
+        status: true
+        method: go build -o bin/parking_lot /usr/src/parking_lot/main.go
+      run:
+        status: true
+        method: ./bin/parking_lot
+    watcher:
+      extensions:
+        - go
+      paths:
+        - /
+      ignore:
+        paths:
+          - .git
+          - .realize
+          - vendor
