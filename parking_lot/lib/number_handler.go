@@ -19,6 +19,7 @@ func (NumberColorHandler) ValidateHandler(args ...string) error {
 
 func (NumberColorHandler) ExecuteHandler(PS *models.ParkingStore, args ...string) (string, error) {
 	var retNumber []string
+
 	if result := PS.Search(models.WithCarColour(args[0])); len(result) > 0 {
 		for _, slot := range result {
 			Car := PS.GetCarAtSlot(slot)
@@ -26,8 +27,8 @@ func (NumberColorHandler) ExecuteHandler(PS *models.ParkingStore, args ...string
 			if Car != nil {
 				retNumber = append(retNumber, Car.Number)
 			}
-
 		}
+
 		return strings.Join(retNumber, ", "), nil
 	}
 

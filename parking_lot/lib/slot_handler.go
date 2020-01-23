@@ -48,6 +48,7 @@ func (SlotColorHandler) ExecuteHandler(PS *models.ParkingStore, args ...string) 
 
 func arrayToString(A []int, delim string) string {
 	var buffer bytes.Buffer
+
 	for i := 0; i < len(A); i++ {
 		buffer.WriteString(strconv.Itoa(A[i]))
 		if i != len(A)-1 {

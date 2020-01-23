@@ -32,6 +32,7 @@ func (ps *ParkingStore) Create(i int) bool {
 func (ps ParkingStore) Count() (int, int) {
 	var index int
 	var vacant int
+
 	funk.ForEach(ps, func(p ParkingLot) {
 		index++
 		if p.Car == nil || (*p.Car).Number == "" {
@@ -59,6 +60,7 @@ func (ps *ParkingStore) Leave(slot int) bool {
 
 func (ps *ParkingStore) Park(c Car) (int, bool) {
 	var index int
+
 	if index = ps.FindVacantPark(); index <= 0 {
 		return 0, false
 	}
@@ -97,6 +99,7 @@ func (ps ParkingStore) Search(fxs ...CarSearchOption) []int {
 	slots := []int{}
 
 	index := 0
+
 	funk.ForEach(ps, func(p ParkingLot) {
 		index++
 		result := true
@@ -117,6 +120,7 @@ func (ps ParkingStore) Search(fxs ...CarSearchOption) []int {
 func (ps ParkingStore) GetCarAtSlot(slot int) *Car {
 	return ps.getCarAtSlot(slot)
 }
+
 func (ps ParkingStore) getCarAtSlot(slot int) *Car {
 	if PS := ps[slot-1]; PS.Car != nil {
 		return ps[slot-1].Car
