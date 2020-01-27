@@ -157,6 +157,11 @@ func (c *Command) Execute(command string, args ...string) (res string, err error
 			return
 		}
 
+		if err = Handler.ValidateHandler(args...); err != nil {
+			fmt.Println("ValidateHandler ", c.GetName(), err.Error())
+			return
+		}
+
 		if res, err = Handler.ExecuteHandler(&PS, args...); err != nil {
 			//fmt.Println("Error :", err.Error())
 			res = err.Error()
